@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Menu, X } from 'lucide-react';
+import { MessageCircle, Menu, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const navigation = [
@@ -46,9 +46,19 @@ export function SiteHeader() {
           ))}
         </nav>
 
+        <a
+          href="https://t.me/+QS74md56VtkxOGQ1"
+          target="_blank"
+          rel="noreferrer"
+          className="ml-auto inline-flex min-h-10 items-center justify-center gap-2 rounded-md bg-primary px-3 text-sm font-medium text-primary-foreground transition-transform duration-100 ease-out hover:-translate-y-px focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:translate-y-px md:ml-0 md:px-4"
+        >
+          <MessageCircle aria-hidden="true" className="size-4" />
+          Join this chat
+        </a>
+
         <button
           type="button"
-          className="ml-auto grid size-10 place-items-center rounded-md border border-border bg-card transition-colors duration-100 ease-out hover:bg-secondary focus-visible:ring-2 focus-visible:ring-ring md:hidden"
+          className="grid size-10 shrink-0 place-items-center rounded-md border border-border bg-card transition-colors duration-100 ease-out hover:bg-secondary focus-visible:ring-2 focus-visible:ring-ring md:hidden"
           aria-label={open ? 'Close navigation' : 'Open navigation'}
           aria-expanded={open}
           aria-controls="mobile-navigation"

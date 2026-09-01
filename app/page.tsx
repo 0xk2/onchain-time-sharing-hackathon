@@ -3,7 +3,7 @@ import {
   ArrowRight,
   CalendarDays,
   CheckCircle2,
-  Play,
+  MessageCircle,
   Sparkles,
 } from 'lucide-react';
 
@@ -63,13 +63,15 @@ export default function Home() {
           </p>
 
           <div className="mt-9 flex flex-wrap gap-3">
-            <Link
-              href="/learn"
+            <a
+              href="https://t.me/+QS74md56VtkxOGQ1"
+              target="_blank"
+              rel="noreferrer"
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-primary px-5 text-sm font-medium text-primary-foreground transition-transform duration-100 ease-out hover:-translate-y-px focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:translate-y-px"
             >
-              Start learning
-              <Play aria-hidden="true" className="size-4 fill-current" />
-            </Link>
+              Join this chat
+              <MessageCircle aria-hidden="true" className="size-4" />
+            </a>
             <Link
               href="/event"
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-border bg-card/60 px-5 text-sm font-medium transition-colors duration-100 ease-out hover:bg-secondary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
