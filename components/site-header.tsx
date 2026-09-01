@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const navigation = [
@@ -46,17 +46,9 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <Link
-          href="/submit"
-          className="ml-auto hidden min-h-10 items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground transition-transform duration-100 ease-out hover:-translate-y-px focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:translate-y-px sm:inline-flex md:ml-0"
-        >
-          Submit project
-          <ArrowRight aria-hidden="true" className="size-4" />
-        </Link>
-
         <button
           type="button"
-          className="ml-auto grid size-10 place-items-center rounded-md border border-border bg-card transition-colors duration-100 ease-out hover:bg-secondary focus-visible:ring-2 focus-visible:ring-ring sm:ml-0 md:hidden"
+          className="ml-auto grid size-10 place-items-center rounded-md border border-border bg-card transition-colors duration-100 ease-out hover:bg-secondary focus-visible:ring-2 focus-visible:ring-ring md:hidden"
           aria-label={open ? 'Close navigation' : 'Open navigation'}
           aria-expanded={open}
           aria-controls="mobile-navigation"
@@ -83,14 +75,6 @@ export function SiteHeader() {
                 {label}
               </Link>
             ))}
-            <Link
-              href="/submit"
-              onClick={() => setOpen(false)}
-              className="mt-2 inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              Submit project
-              <ArrowRight aria-hidden="true" className="size-4" />
-            </Link>
           </div>
         </nav>
       )}

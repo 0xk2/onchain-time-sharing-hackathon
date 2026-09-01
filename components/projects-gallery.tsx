@@ -77,9 +77,14 @@ export function ProjectsGallery() {
           <Link href="/learn" className="inline-flex min-h-11 items-center gap-2 rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground focus-visible:ring-2 focus-visible:ring-ring">
             Start learning <ArrowRight aria-hidden="true" className="size-4" />
           </Link>
-          <Link href="/submit" className="inline-flex min-h-11 items-center rounded-md border border-border px-4 text-sm focus-visible:ring-2 focus-visible:ring-ring">
+          <button
+            type="button"
+            disabled
+            aria-label="Project submissions are not open yet"
+            className="inline-flex min-h-11 cursor-not-allowed items-center rounded-md border border-border bg-secondary px-4 text-sm text-muted-foreground opacity-55"
+          >
             Submit a project
-          </Link>
+          </button>
         </div>
       </div>
     );
