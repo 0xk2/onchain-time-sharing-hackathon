@@ -1,6 +1,4 @@
-import { env } from 'cloudflare:workers';
-
-import { ensureDatabase } from '@/db/ensure';
+import { getStore } from '@netlify/blobs';
 
 type ContactPayload = Record<string, unknown>;
 
@@ -33,13 +31,17 @@ export async function POST(request: Request) {
       );
     }
 
-    await ensureDatabase();
-    await env.DB.prepare(`
-      INSERT INTO contacts (id, created_at, name, email, subject, message)
-      VALUES (?, ?, ?, ?, ?, ?)
-    `)
-      .bind(crypto.randomUUID(), Date.now(), name, email, subject, message)
-      .run();
+    const id = crypto.randomUUID();
+    const createdAt = Date.now();
+    const store = getStore({ name: 'onchain-time-contacts', consistency: 'strong' });
+    await store.setJSON(`${createdAt}-${id}`, {
+      id,
+      createdAt,
+      name,
+      email,
+      subject,
+      message,
+    });
 
     return Response.json({ ok: true });
   } catch (error) {

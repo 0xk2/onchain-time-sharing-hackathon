@@ -1,6 +1,4 @@
-import { env } from 'cloudflare:workers';
-
-import { ensureDatabase } from '@/db/ensure';
+import { getStore } from '@netlify/blobs';
 
 type SubmissionPayload = Record<string, unknown>;
 
@@ -87,33 +85,27 @@ export async function POST(request: Request) {
       );
     }
 
-    await ensureDatabase();
     const id = `OT-${crypto.randomUUID().slice(0, 8).toUpperCase()}`;
+    const createdAt = Date.now();
+    const store = getStore({ name: 'onchain-time-submissions', consistency: 'strong' });
+    const visibility = publicConsent ? 'public' : 'private';
 
-    await env.DB.prepare(`
-      INSERT INTO submissions (
-        id, created_at, project_name, team_name, contact_name, contact_email,
-        members, target_user, problem, product, iteration, demo_url, repo_url,
-        public_consent
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `)
-      .bind(
-        id,
-        Date.now(),
-        projectName,
-        teamName,
-        contactName,
-        contactEmail,
-        members,
-        targetUser,
-        problem,
-        product,
-        iteration,
-        demoUrl || null,
-        repoUrl || null,
-        publicConsent ? 1 : 0,
-      )
-      .run();
+    await store.setJSON(`${visibility}/${createdAt}-${id}`, {
+      id,
+      createdAt,
+      projectName,
+      teamName,
+      contactName,
+      contactEmail,
+      members,
+      targetUser,
+      problem,
+      product,
+      iteration,
+      demoUrl: demoUrl || null,
+      repoUrl: repoUrl || null,
+      publicConsent,
+    });
 
     return Response.json({ ok: true, id });
   } catch (error) {

@@ -1,29 +1,31 @@
-import { env } from 'cloudflare:workers';
+import { getStore } from '@netlify/blobs';
 
-import { ensureDatabase } from '@/db/ensure';
+type PublicProject = {
+  id: string;
+  projectName: string;
+  teamName: string;
+  targetUser: string;
+  problem: string;
+  product: string;
+  iteration: string;
+  demoUrl?: string | null;
+  repoUrl?: string | null;
+  createdAt: number;
+};
 
 export async function GET() {
   try {
-    await ensureDatabase();
-    const result = await env.DB.prepare(`
-      SELECT
-        id,
-        project_name AS projectName,
-        team_name AS teamName,
-        target_user AS targetUser,
-        problem,
-        product,
-        iteration,
-        demo_url AS demoUrl,
-        repo_url AS repoUrl,
-        created_at AS createdAt
-      FROM submissions
-      WHERE public_consent = 1
-      ORDER BY created_at DESC
-      LIMIT 50
-    `).all();
+    const store = getStore({ name: 'onchain-time-submissions', consistency: 'strong' });
+    const { blobs } = await store.list({ prefix: 'public/' });
+    const keys = blobs
+      .map(({ key }) => key)
+      .sort((a, b) => b.localeCompare(a))
+      .slice(0, 50);
+    const projects = (
+      await Promise.all(keys.map((key) => store.get(key, { type: 'json' })))
+    ).filter((project): project is PublicProject => project !== null);
 
-    return Response.json({ projects: result.results ?? [] });
+    return Response.json({ projects });
   } catch (error) {
     console.error('Project listing failed', error);
     return Response.json(
