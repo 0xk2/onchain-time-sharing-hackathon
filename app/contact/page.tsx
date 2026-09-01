@@ -57,7 +57,7 @@ export default function ContactPage() {
         <div className="rounded-lg border border-border bg-card p-5 sm:p-8 lg:p-10">
           <p className="font-mono text-xs uppercase tracking-[0.14em] text-primary">Send a message</p>
           <h2 className="mt-4 text-3xl font-medium tracking-[-0.04em]">How can we help?</h2>
-          <p className="mb-8 mt-3 text-sm leading-6 text-muted-foreground">Messages are saved for the organizing team. Include enough context for the right person to respond.</p>
+          <p className="mb-8 mt-3 text-sm leading-6 text-muted-foreground">Complete the form to compose an email to the organizing team in your own email app.</p>
           <ContactForm />
         </div>
       </section>
